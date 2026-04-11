@@ -7,6 +7,6 @@ class DataWorker():
     def __init__(self, path):
         self.data = pq.read_table(path)
 
-    def ShowData(self):
+    def SaveData(self):
         df = self.data.to_pandas()
         df.to_csv('data.csv')

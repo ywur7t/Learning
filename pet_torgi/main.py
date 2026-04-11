@@ -2,8 +2,8 @@ from parser import Parser
 from downloader import DownLoader
 from dataworker import DataWorker
 
-LINK = "https://spimex.com/markets/oil_products/trades/results/"
 BASE_LINK = "https://spimex.com"
+LINK = f"{BASE_LINK}/markets/oil_products/trades/results/"
 
 if __name__ == "__main__":
     parser = Parser(LINK)
@@ -17,5 +17,5 @@ if __name__ == "__main__":
     data =  dlr.FindTables()
     dlr.SaveData(data)
 
-    dw = DataWorker('./data/data.parquet')
-    dw.ShowData()
+    dw = DataWorker('./data/data1.parquet')
+    dw.SaveData()

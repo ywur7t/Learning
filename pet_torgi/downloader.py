@@ -11,7 +11,7 @@ class DownLoader():
     def __init__(self, link):
         self.link = link
         self.pdf_path = "./src/output.pdf"
-        self.parket_path = "./data/data.parquet"
+        self.parket_path = "./data/data1.parquet"
         Path("./src/").mkdir(parents=True, exist_ok=True)
 
     def GetFile(self):
