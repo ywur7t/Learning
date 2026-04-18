@@ -8,22 +8,24 @@ import pyarrow.parquet as pq
 
 
 class DownLoader():
-    def __init__(self, link):
+    def __init__(self):
+        self.link = None
+        self.pdf_path = "data/row/*.pdf"
+        self.parket_path = "data/landing/*.parquet" 
+        Path("data/row").mkdir(parents=True, exist_ok=True)
+        Path("data/landing").mkdir(parents=True, exist_ok=True)
+
+    def SetLink(self, link, date):
         self.link = link
-        self.pdf_path = "./src/output.pdf"
-        self.parket_path = "./data/data1.parquet"
-        Path("./src/").mkdir(parents=True, exist_ok=True)
+        date = date.replace(".","-")
+        self.pdf_path = self.pdf_path.replace("*", date)
+        self.parket_path = self.parket_path.replace("*", date)
 
     def GetFile(self):
         response = requests.get(self.link)
         doc = pymupdf.open(stream=response.content, filetype="pdf")
         doc.save(self.pdf_path)
         doc.close()
-        
-        
-
-    
-        
 
     def FindTables(self):
         doc = pymupdf.open(self.pdf_path)
@@ -52,5 +54,5 @@ class DownLoader():
         return pa.Table.from_pandas(final_df)
     
     def SaveData(self, data):
-        Path("./data/").mkdir(exist_ok=True)
+        # Path("./data/").mkdir(exist_ok=True)
         pq.write_table(data, self.parket_path)
