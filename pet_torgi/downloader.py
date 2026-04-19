@@ -15,6 +15,8 @@ class DownLoader():
         Path("data/row").mkdir(parents=True, exist_ok=True)
         Path("data/landing").mkdir(parents=True, exist_ok=True)
 
+        self.data = None
+
     def SetLink(self, link, date):
         self.link = link
         date = date.replace(".","-")
@@ -34,8 +36,6 @@ class DownLoader():
 
         for index, page in enumerate(doc):
             tables = page.find_tables()
-            if index == 0:
-                tables = tables.tables[3:]
 
             for table in tables:
                 df = table.to_pandas()
@@ -50,9 +50,9 @@ class DownLoader():
         if not dfs:
             return None
         
-        final_df = pd.concat(dfs, ignore_index=True)
-        return pa.Table.from_pandas(final_df)
+        self.data = pd.concat(dfs, ignore_index=True)
+
     
-    def SaveData(self, data):
-        # Path("./data/").mkdir(exist_ok=True)
-        pq.write_table(data, self.parket_path)
+    def SaveData(self):
+        table = pa.Table.from_pandas(self.data)
+        pq.write_table(table, self.parket_path)

@@ -30,9 +30,6 @@ class Parser():
     def ShowPage(self):
         if self.status == True:
             print(self.page.prettify())
-            # print(self.page.find(class_="page-content__tabs__block"))
-            # print(self.file_link)
-            # print(self.file_date)
 
     def GetFileLink(self):
         parent = "page-content__tabs__block"
